@@ -1,0 +1,14 @@
+# Настройки сайта. GitHub Pages собирает сайт из этих файлов автоматически.
+title: "Музей строительных образцов"
+description: "Образцы плитки, черепицы, кирпича и кованых гвоздей с наших объектов"
+
+collections:
+  exhibits:        # экспонаты: папка _exhibits, по файлу на экспонат
+    output: false
+  manufacturers:   # заводы-изготовители: папка _manufacturers
+    output: false
+
+exclude:
+  - README.md
+  - tools
+  - .pages.yml

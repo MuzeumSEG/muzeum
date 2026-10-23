@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800">
+<defs>
+ <radialGradient id="bg" cx="50%" cy="40%" r="75%"><stop offset="0" stop-color="#d9d8d2"/><stop offset="1" stop-color="#b9b8b1"/></radialGradient>
+ <filter id="grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="4"/><feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.10 0"/><feComposite in2="SourceGraphic" operator="in"/></filter>
+ <filter id="rough" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="3" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="5"/></filter>
+ <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%"><feGaussianBlur stdDeviation="16"/></filter>
+ <filter id="wear"><feTurbulence type="fractalNoise" baseFrequency="0.05 0.08" numOctaves="4" seed="11"/><feColorMatrix values="0 0 0 0 0.95  0 0 0 0 0.92  0 0 0 0 0.85  0 0 0 -2.2 1.3"/><feComposite in2="SourceGraphic" operator="in"/></filter>
+</defs>
+<rect width="800" height="800" fill="url(#bg)"/>
+<rect x="160" y="160" width="520" height="520" rx="6" fill="#000" opacity=".35" filter="url(#shadow)"/>
+<g filter="url(#rough)"><rect x="140" y="120" width="520" height="520" rx="5" fill="#bcae9d"/><rect x="170" y="150" width="26" height="460" rx="4" fill="#a99a8a"/><rect x="228" y="150" width="26" height="460" rx="4" fill="#a99a8a"/><rect x="286" y="150" width="26" height="460" rx="4" fill="#a99a8a"/><rect x="344" y="150" width="26" height="460" rx="4" fill="#a99a8a"/><rect x="402" y="150" width="26" height="460" rx="4" fill="#a99a8a"/><rect x="460" y="150" width="26" height="460" rx="4" fill="#a99a8a"/><rect x="518" y="150" width="26" height="460" rx="4" fill="#a99a8a"/><rect x="576" y="150" width="26" height="460" rx="4" fill="#a99a8a"/>
+<circle cx="400" cy="380" r="120" fill="#bcae9d" stroke="#8f8172" stroke-width="10"/>
+<circle cx="400" cy="380" r="92" fill="none" stroke="#8f8172" stroke-width="4"/>
+<text x="400" y="372" text-anchor="middle" font-family="Georgia, serif" font-size="38" letter-spacing="4" fill="#7d7062">METTLACH</text>
+<text x="400" y="418" text-anchor="middle" font-family="Georgia, serif" font-size="22" letter-spacing="3" fill="#7d7062">· · ·</text>
+<rect x="140" y="120" width="520" height="520" fill="#fff" filter="url(#wear)" opacity=".35"/></g>
+<rect width="800" height="800" fill="#000" filter="url(#grain)" opacity="0.9"/>
+<g font-family="monospace" font-size="18" fill="#55534c"><text x="40" y="770">ДЕМО · ЗАМЕНИТЕ ФОТОГРАФИЕЙ</text></g>
+</svg>

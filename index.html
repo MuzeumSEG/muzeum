@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Музей строительных образцов</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Образцы плитки, черепицы, кирпича и кованых гвоздей из домов старого фонда Петербурга">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Forum&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<!-- Значки. Капитель можно заменить логотипом компании: достаточно поменять содержимое symbol id="i-capital". -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-capital" viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M14 26H186Q174 33 186 40H14Q26 33 14 26Z"/>
+    <circle cx="100" cy="33" r="3.5"/>
+    <path d="M100 42C84 46 60 40 44 52"/><path d="M100 42C116 46 140 40 156 52"/>
+    <circle cx="36" cy="56" r="10"/><circle cx="36" cy="56" r="3.5"/>
+    <circle cx="164" cy="56" r="10"/><circle cx="164" cy="56" r="3.5"/>
+    <path d="M52 66L62 150"/><path d="M148 66L138 150"/>
+    <path d="M86 150C82 116 90 94 100 80C110 94 118 116 114 150"/><path d="M100 80Q108 70 112 78"/>
+    <path d="M60 150C58 122 64 104 74 92C80 104 84 124 82 150"/><path d="M74 92Q80 84 84 90"/>
+    <path d="M118 150C116 124 120 104 126 92C136 104 142 122 140 150"/><path d="M126 92Q120 84 116 90"/>
+    <path d="M70 150C70 136 76 122 84 116"/><path d="M130 150C130 136 124 122 116 116"/>
+    <path d="M58 150H142V159H58Z"/>
+    <path d="M64 159V192M78 159V192M92 159V192M108 159V192M122 159V192M136 159V192"/>
+  </symbol>
+  <symbol id="i-tile" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round">
+    <rect x="3" y="3" width="18" height="18"/><path d="M12 5.5L18.5 12 12 18.5 5.5 12Z"/><circle cx="12" cy="12" r="2"/>
+  </symbol>
+  <symbol id="i-factory" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round">
+    <path d="M3 21V11l5 3v-3l5 3V4h4v17Z"/><path d="M3 21h18"/><path d="M14 7h2"/>
+  </symbol>
+  <symbol id="i-window" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M5 21V10a7 7 0 0 1 14 0v11Z"/><path d="M12 10v6M9 13h6"/><path d="M3 21h18"/>
+  </symbol>
+  <symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round">
+    <path d="M4 4h6a2 2 0 0 1 2 2v14a2 2 0 0 0-2-2H4Z"/><path d="M20 4h-6a2 2 0 0 0-2 2v14a2 2 0 0 1 2-2h6Z"/>
+  </symbol>
+</svg>
+
+<div class="demo-note" id="demo-note">
+  <div class="wrap" data-text="demo_note">Демонстрационная версия. Экспонаты, объекты и адреса вымышлены, фотографии заменены рисунками.</div>
+</div>
+
+<div class="topbar">
+  <div class="wrap topbar-inner">
+    <button type="button" class="burger" id="burger" aria-label="Открыть меню" aria-controls="menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="brand" href="#katalog"><svg class="brand-mark" aria-hidden="true"><use href="#i-capital"/></svg><span>Музей образцов</span></a>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="wrap masthead-inner">
+    <div class="masthead-text">
+      <p class="eyebrow" data-text="eyebrow">Дома старого фонда · Санкт-Петербург</p>
+      <h1 data-text="title">Музей строительных образцов</h1>
+      <p class="lede" data-text="lede">Плитка, черепица, кирпич и кованые гвозди, снятые с наших объектов при обследованиях, проектировании и реставрации, в том числе в домах-памятниках. У каждого образца указаны адрес дома, клеймо и всё, что удалось узнать о изготовителе.</p>
+      <dl class="tally" id="tally"></dl>
+    </div>
+    <svg class="masthead-capital" aria-hidden="true"><use href="#i-capital"/></svg>
+  </div>
+  <div class="entablature" aria-hidden="true"><i class="fascia"></i><i class="dentils"></i><i class="cyma"></i></div>
+</header>
+
+<main>
+  <section class="view" id="view-katalog" aria-label="Каталог экспонатов">
+    <div class="wrap">
+      <div class="controls">
+        <div class="chips" id="type-chips" role="group" aria-label="Тип изделия"></div>
+        <div class="control-row">
+          <label class="field field-search">
+            <span class="field-label">Поиск</span>
+            <input type="search" id="q" placeholder="Название, клеймо, адрес, номер" autocomplete="off">
+          </label>
+          <label class="field">
+            <span class="field-label">Порядок</span>
+            <select id="sort">
+              <option value="inv">По инвентарному номеру</option>
+              <option value="year">По датировке, от старых</option>
+              <option value="added">Сначала новые поступления</option>
+            </select>
+          </label>
+        </div>
+      </div>
+      <p class="result-count" id="count" aria-live="polite"></p>
+      <ul class="grid" id="grid"></ul>
+      <div class="empty" id="empty" hidden>
+        <p>По этим условиям экспонатов нет.</p>
+        <button type="button" class="btn-link" id="reset">Сбросить фильтры</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="view" id="view-izgotoviteli" aria-label="Изготовители" hidden>
+    <div class="wrap">
+      <ul class="makers" id="makers"></ul>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="railing" aria-hidden="true"></div>
+  <div class="foot-band">
+    <div class="wrap foot-inner">
+      <svg class="foot-mark" aria-hidden="true"><use href="#i-capital"/></svg>
+      <div class="foot-text">
+        <p data-text="footer_text">Музей строительных образцов. Коллекция собрана на объектах компании в Санкт-Петербурге.</p>
+        <dl class="contacts" id="contacts" hidden></dl>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<dialog class="drawer" id="menu" aria-label="Меню">
+  <div class="drawer-inner">
+    <div class="drawer-head">
+      <span class="brand"><svg class="brand-mark" aria-hidden="true"><use href="#i-capital"/></svg><span>Музей образцов</span></span>
+      <button type="button" class="close" id="menu-close">Закрыть</button>
+    </div>
+    <p class="drawer-group">Разделы</p>
+    <ul class="drawer-list">
+      <li><a href="#katalog" data-close data-view="katalog"><svg aria-hidden="true"><use href="#i-tile"/></svg>Экспонаты</a></li>
+      <li><a href="#izgotoviteli" data-close data-view="izgotoviteli"><svg aria-hidden="true"><use href="#i-factory"/></svg>Изготовители</a></li>
+    </ul>
+    <p class="drawer-group">Для сотрудников</p>
+    <ul class="drawer-list">
+      <li><a href="https://app.pagescms.org" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-window"/></svg>Добавить экспонат</a></li>
+      <li><button type="button" id="howto-toggle" aria-expanded="false" aria-controls="howto"><svg aria-hidden="true"><use href="#i-book"/></svg>Как пополнять каталог</button></li>
+    </ul>
+    <div class="howto" id="howto" hidden>
+      <ol>
+        <li>Откройте «Добавить экспонат» и войдите аккаунтом GitHub или по приглашению на почту.</li>
+        <li>Если изготовителя ещё нет в справочнике, сначала добавьте его в разделе «Изготовители».</li>
+        <li>В разделе «Экспонаты» нажмите Add entry, заполните поля и загрузите фото: первое лицевая сторона, второе тыльная с клеймом.</li>
+        <li>Нажмите Save. Через 1–2 минуты экспонат появится на сайте.</li>
+      </ol>
+    </div>
+  </div>
+</dialog>
+
+<dialog class="sheet" id="sheet" aria-labelledby="sheet-title">
+  <div class="sheet-body" id="sheet-body"></div>
+</dialog>
+
+<script src="assets/app.js"></script>
+</body>
+</html>
