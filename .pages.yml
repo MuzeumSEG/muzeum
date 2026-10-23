@@ -1,0 +1,227 @@
+# Настройка формы пополнения (Pages CMS, app.pagescms.org).
+# Здесь описано, какие поля видит сотрудник, когда добавляет экспонат или изготовителя.
+
+media:
+  input: media/exhibits
+  output: /media/exhibits
+  categories: [image]
+  rename: safe
+
+settings:
+  commit:
+    identity: user
+    templates:
+      create: "Добавлен: {filename}"
+      update: "Изменён: {filename}"
+      delete: "Удалён: {filename}"
+      rename: "Переименован: {oldFilename} → {newFilename}"
+
+content:
+  - name: exhibits
+    label: Экспонаты
+    type: collection
+    path: _exhibits
+    format: yaml-frontmatter
+    filename:
+      template: "exhibit-{year}{month}{day}-{hour}{minute}{second}.md"
+      field: create
+    view:
+      primary: title
+      fields: [inv, title, type, dating, published]
+      sort: [inv, title, added]
+      search: [title, inv, stamp, object, address]
+      default:
+        sort: inv
+        order: asc
+    fields:
+      - name: title
+        label: Название экспоната
+        type: string
+        required: true
+        description: "Коротко и по делу, например «Кирпич с клеймом «К.Б.»»"
+      - name: inv
+        label: Инвентарный номер
+        type: string
+        required: true
+        description: "Например ОБ-0007. Номер должен быть уникальным."
+      - name: type
+        label: Тип изделия
+        type: select
+        required: true
+        options:
+          values: [Плитка, Черепица, Кирпич, Гвоздь, Изразец, Другое]
+      - name: photos
+        label: Фотографии
+        type: image
+        required: true
+        description: "Первое фото станет обложкой. Добавьте общий вид и клеймо крупно."
+        options:
+          multiple:
+            max: 12
+          unique: true
+      - name: stamp
+        label: Клеймо или маркировка
+        type: string
+        description: "Как читается клеймо. Если клейма нет, оставьте пустым."
+      - name: dating
+        label: Датировка
+        type: string
+        description: "Как удобно: «ок. 1900», «1880–1910-е», «XIX век»"
+      - name: year
+        label: Год для сортировки
+        type: number
+        description: "Одно число, примерный год. На сайте не показывается, нужен только для сортировки."
+        options:
+          min: 1000
+          max: 2100
+      - name: manufacturer
+        label: Изготовитель
+        type: reference
+        description: "Выберите из справочника изготовителей. Если нужного ещё нет, сначала добавьте его в раздел «Изготовители»."
+        options:
+          collection: manufacturers
+          value: "{path}"
+          label: "{primary}"
+      - name: material
+        label: Материал
+        type: string
+      - name: size
+        label: Размеры
+        type: string
+        description: "Например «26,5 × 13 × 6,5 см»"
+      - name: object
+        label: Объект, откуда образец
+        type: string
+        required: true
+        description: "Название объекта, например «Доходный дом Петрова»"
+      - name: address
+        label: Адрес объекта
+        type: string
+        required: true
+      - name: added
+        label: Дата поступления в музей
+        type: date
+        options:
+          format: yyyy-MM-dd
+      - name: body
+        label: Описание экспоната
+        type: rich-text
+        options:
+          media: false
+      - name: sources
+        label: Источники
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{title}"
+        fields:
+          - name: title
+            label: Название источника
+            type: string
+          - name: url
+            label: Ссылка
+            type: string
+      - name: published
+        label: Показывать на сайте
+        type: boolean
+        default: true
+
+  - name: manufacturers
+    label: Изготовители
+    type: collection
+    path: _manufacturers
+    format: yaml-frontmatter
+    filename:
+      template: "maker-{year}{month}{day}-{hour}{minute}{second}.md"
+      field: create
+    view:
+      primary: name
+      fields: [name, country, years]
+      search: [name, city, stamps]
+    fields:
+      - name: name
+        label: Название изготовителя
+        type: string
+        required: true
+      - name: country
+        label: Страна
+        type: string
+      - name: city
+        label: Город или местность
+        type: string
+      - name: years
+        label: Годы работы
+        type: string
+        description: "Например «с 1836» или «1880-е – 1918»"
+      - name: stamps
+        label: Известные клейма
+        type: string
+        description: "Через запятую"
+      - name: identified
+        label: Изготовитель установлен точно
+        type: boolean
+        default: true
+        description: "Снимите галочку, если изготовитель пока определён лишь предположительно"
+      - name: body
+        label: История изготовителя
+        type: rich-text
+        options:
+          media: false
+      - name: sources
+        label: Источники
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{title}"
+        fields:
+          - name: title
+            label: Название источника
+            type: string
+          - name: url
+            label: Ссылка
+            type: string
+
+  - name: site
+    label: Тексты сайта
+    type: file
+    path: data/site.json
+    format: json
+    fields:
+      - name: title
+        label: Название сайта
+        type: string
+        required: true
+      - name: eyebrow
+        label: Строка над названием
+        type: string
+      - name: lede
+        label: Вводный текст в шапке
+        type: text
+      - name: footer_text
+        label: Текст в подвале
+        type: text
+      - name: contacts
+        label: Контакты в подвале
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{label}: {value}"
+        fields:
+          - name: label
+            label: Подпись
+            type: string
+            description: "Например «Телефон» или «Адрес»"
+          - name: value
+            label: Текст
+            type: string
+          - name: url
+            label: Ссылка (необязательно)
+            type: string
+            description: "Для сайта: https://…, для почты: mailto:…, для телефона: tel:+7…"
+      - name: demo_note
+        label: Плашка вверху страницы
+        type: text
+        description: "Оставьте пустым, чтобы плашки не было"
